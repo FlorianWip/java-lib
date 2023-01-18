@@ -6,12 +6,27 @@
 
     <groupId>de.flammenfuchs</groupId>
     <artifactId>java-lib</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <properties>
         <maven.compiler.source>18</maven.compiler.source>
         <maven.compiler.target>18</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>flammenfuchs-repo-public</id>
+            <name>Flammenfuchs_YT's Repository</name>
+            <url>https://repo.flammenfuchs.de/public</url>
+        </repository>
+    </repositories>
+
+    <distributionManagement>
+        <repository>
+            <id>flammenfuchs-repo-public</id>
+            <url>https://repo.flammenfuchs.de/public</url>
+        </repository>
+    </distributionManagement>
 
 </project>
