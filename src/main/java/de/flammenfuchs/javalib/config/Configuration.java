@@ -3,7 +3,6 @@ package de.flammenfuchs.javalib.config;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.Getter;
-import org.ietf.jgss.GSSContext;
 
 import java.io.File;
 import java.util.HashMap;
