@@ -2,7 +2,6 @@ package de.flammenfuchs.javalib.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import de.flammenfuchs.flamemod.client.config.configs.OverlayConfig;
 import lombok.Getter;
 import org.ietf.jgss.GSSContext;
 
