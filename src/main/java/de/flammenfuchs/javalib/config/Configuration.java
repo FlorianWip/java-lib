@@ -28,6 +28,9 @@ public class Configuration {
         directoryFile.mkdirs();
     }
 
+    public Configuration(String name) {
+        this(name, null);
+    }
 
 
     public <T> ConfigurationContainer<T> getContainer(Class<T> cfgClass) {
