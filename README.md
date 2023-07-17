@@ -22,6 +22,6 @@ It will be expanded in the future. I have to move old code into this library and
 <dependency>
     <groupId>de.flammenfuchs</groupId>
     <artifactId>java-lib</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 </dependency>
 ````
