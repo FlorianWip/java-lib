@@ -6,6 +6,7 @@ It will be expanded in the future. I have to move old code into this library and
 - FileUtil
 - Formatter (e.g. Duration)
 - JSON Config System (uses/needs gson)
+- ClassScanner (for reflections)
 
 ## Maven
 ### Repository
