@@ -7,6 +7,7 @@ It will be expanded in the future. I have to move old code into this library and
 - Formatter (e.g. Duration)
 - JSON Config System (uses/needs gson)
 - ClassScanner (for reflections)
+- ReflectionUtil
 
 ## Maven
 ### Repository
@@ -22,6 +23,6 @@ It will be expanded in the future. I have to move old code into this library and
 <dependency>
     <groupId>de.flammenfuchs</groupId>
     <artifactId>java-lib</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
 </dependency>
 ````
