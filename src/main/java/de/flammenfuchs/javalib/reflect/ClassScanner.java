@@ -3,9 +3,10 @@ package de.flammenfuchs.javalib.reflect;
 import lombok.Setter;
 import lombok.SneakyThrows;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.File;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 public class ClassScanner {
@@ -13,7 +14,7 @@ public class ClassScanner {
     private final String packageName;
 
     @Setter
-    private ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+    private ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
     public ClassScanner(String mainClass) {
         this.packageName = mainClass;
@@ -23,19 +24,36 @@ public class ClassScanner {
         this.packageName = mainClass.getClass().getPackageName();
     }
 
+    @SneakyThrows
     public List<Class> scan() {
-        final InputStream stream = classLoader.getResourceAsStream(
-                packageName.replaceAll("[.]", "/"));
-        final BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-        return reader.lines()
-                .filter(line -> line.endsWith(".class"))
-                .map(line -> getClass(line, packageName))
-                .toList();
+        String path = packageName.replace('.', '/');
+        Enumeration<URL> resources = classLoader.getResources(path);
+        List<File> dirs = new ArrayList<>();
+        while (resources.hasMoreElements()) {
+            URL resource = resources.nextElement();
+            dirs.add(new File(resource.getFile()));
+        }
+        ArrayList<Class> classes = new ArrayList<Class>();
+        for (File directory : dirs) {
+            classes.addAll(findClasses(directory, packageName));
+        }
+        return classes;
     }
 
-    @SneakyThrows
-    private Class getClass(String className, String packageName) {
-        return Class.forName(packageName + "."
-                + className.substring(0, className.lastIndexOf('.')));
+    private List<Class> findClasses(File directory, String packageName) throws ClassNotFoundException {
+        List<Class> classes = new ArrayList<Class>();
+        if (!directory.exists()) {
+            return classes;
+        }
+        File[] files = directory.listFiles();
+        for (File file : files) {
+            if (file.isDirectory()) {
+                assert !file.getName().contains(".");
+                classes.addAll(findClasses(file, packageName + "." + file.getName()));
+            } else if (file.getName().endsWith(".class")) {
+                classes.add(Class.forName(packageName + '.' + file.getName().substring(0, file.getName().length() - 6)));
+            }
+        }
+        return classes;
     }
 }
