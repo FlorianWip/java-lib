@@ -29,7 +29,7 @@ public class ClassScanner {
 
     @SneakyThrows
     public List<? extends Class<?>> scan() {
-        return ClassPath.from(classLoader).getTopLevelClasses(packageName).stream()
+        return ClassPath.from(classLoader).getTopLevelClassesRecursive(packageName).stream()
                 .filter(info -> !ignoredPackages.contains(info.getPackageName()))
                 .map(info -> info.load())
                 .toList();
