@@ -10,6 +10,7 @@ This library includes guava `v32.1.1-jre`.
 - JSON Config System (uses/needs gson)
 - ClassScanner (for reflections)
 - ReflectionUtil
+- Simple Logging
 
 ## Maven
 ### Repository
@@ -25,6 +26,6 @@ This library includes guava `v32.1.1-jre`.
 <dependency>
     <groupId>de.flammenfuchs</groupId>
     <artifactId>java-lib</artifactId>
-    <version>1.3.0</version>
+    <version>1.4.0</version>
 </dependency>
 ````
