@@ -26,6 +26,6 @@ This library includes guava `v32.1.1-jre`.
 <dependency>
     <groupId>de.flammenfuchs</groupId>
     <artifactId>java-lib</artifactId>
-    <version>1.4.0</version>
+    <version>1.4.1</version>
 </dependency>
 ````

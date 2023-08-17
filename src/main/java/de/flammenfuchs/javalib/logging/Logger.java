@@ -14,37 +14,48 @@ public class Logger {
 
     private final java.util.logging.Logger utilLogger;
 
-    public Logger(String loggerName, LogLevel level, String formatString) {
+    public Logger(String loggerName, LogLevel level, String formatString, boolean highlightNonInfo) {
         this.level = level;
         this.utilLogger = java.util.logging.Logger.getLogger(loggerName);
-        init(formatString);
+        init(formatString, highlightNonInfo);
     }
 
     public Logger() {
         this.level = LogLevel.BASIC;
         this.utilLogger = java.util.logging.Logger.getLogger(Thread.currentThread().getName());
-        init(DEFAULT_LOGGING_FORMAT);
+        init(DEFAULT_LOGGING_FORMAT, true);
     }
 
     public Logger(LogLevel level)  {
         this.level = level;
         this.utilLogger = java.util.logging.Logger.getLogger(Thread.currentThread().getName());
-        init(DEFAULT_LOGGING_FORMAT);
+        init(DEFAULT_LOGGING_FORMAT, true);
     }
 
     public Logger(String name)  {
         this.level = LogLevel.BASIC;
         this.utilLogger = java.util.logging.Logger.getLogger(name);
-        init(DEFAULT_LOGGING_FORMAT);
+        init(DEFAULT_LOGGING_FORMAT, true);
     }
 
-    private void init(String formatString) {
+    private void init(String formatString, boolean highlightNonInfo) {
         this.utilLogger.setUseParentHandlers(false);
         ConsoleHandler consoleHandler = new ConsoleHandler();
         consoleHandler.setFormatter(new SimpleFormatter() {
             @Override
             public String format(LogRecord record) {
-                return String.format(formatString, new Date(), record.getLoggerName(), record.getLevel(), record.getMessage());
+                String color;
+                if (highlightNonInfo) {
+                    color = switch (record.getLevel().getName().toLowerCase()) {
+                        case "severe" -> "\u001B[31m";
+                        case "warning" -> "\u001B[33m";
+                        default -> "\u001B[0m";
+                    };
+                } else {
+                    color = null;
+                }
+                String format = color != null ? color + formatString + "\u001B[0m" : formatString;
+                return String.format(format, new Date(), record.getLoggerName(), record.getLevel(), record.getMessage());
             }
         });
         this.utilLogger.addHandler(consoleHandler);

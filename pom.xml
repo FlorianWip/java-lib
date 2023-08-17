@@ -6,7 +6,7 @@
 
     <groupId>de.flammenfuchs</groupId>
     <artifactId>java-lib</artifactId>
-    <version>1.4.0</version>
+    <version>1.4.1</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
