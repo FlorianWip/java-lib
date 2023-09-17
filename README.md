@@ -13,7 +13,6 @@ This library includes guava `v32.1.1-jre`.
 - Simple Logging
 
 ## Maven
-### Repository
 ````
 <repository>
   <id>flammenfuchs-repo-public</id>
@@ -21,11 +20,19 @@ This library includes guava `v32.1.1-jre`.
   <url>https://repo.flammenfuchs.de/public</url>
 </repository>
 ````
-### Dependency
 ````
 <dependency>
     <groupId>de.flammenfuchs</groupId>
     <artifactId>java-lib</artifactId>
-    <version>1.4.1</version>
+    <version>1.4.2</version>
 </dependency>
 ````
+## Gradle
+```
+maven {
+	url "https://repo.flammenfuchs.de/public"
+}
+```
+```
+implementation("de.flammenfuchs:java-lib:1.4.2")
+```
