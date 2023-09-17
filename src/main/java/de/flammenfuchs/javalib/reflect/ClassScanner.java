@@ -31,7 +31,14 @@ public class ClassScanner {
     public List<? extends Class<?>> scan() {
         return ClassPath.from(classLoader).getTopLevelClassesRecursive(packageName).stream()
                 .filter(info -> !ignoredPackages.contains(info.getPackageName()))
-                .map(info -> info.load())
+                .map(info -> {
+                    try {
+                        return classLoader.loadClass(info.getName());
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                        return null;
+                    }
+                })
                 .toList();
     }
 

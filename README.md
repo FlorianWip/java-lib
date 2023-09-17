@@ -24,7 +24,7 @@ This library includes guava `v32.1.1-jre`.
 <dependency>
     <groupId>de.flammenfuchs</groupId>
     <artifactId>java-lib</artifactId>
-    <version>1.4.2</version>
+    <version>1.4.3</version>
 </dependency>
 ````
 ## Gradle
@@ -34,5 +34,5 @@ maven {
 }
 ```
 ```
-implementation("de.flammenfuchs:java-lib:1.4.2")
+implementation("de.flammenfuchs:java-lib:1.4.3")
 ```
