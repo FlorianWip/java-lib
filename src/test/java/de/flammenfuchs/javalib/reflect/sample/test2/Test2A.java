@@ -1,2 +1,4 @@
-package de.flammenfuchs.javalib.reflect.sample.test2;public class Test2A {
+package de.flammenfuchs.javalib.reflect.sample.test2;
+
+public class Test2A {
 }

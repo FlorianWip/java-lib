@@ -1,4 +1,4 @@
-package de.flammenfuchs.javalib;
+package de.flammenfuchs.javalib.util;
 
 public class MathUtil {
 
