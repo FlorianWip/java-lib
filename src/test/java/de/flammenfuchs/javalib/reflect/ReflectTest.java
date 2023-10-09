@@ -1,30 +1,11 @@
 package de.flammenfuchs.javalib.reflect;
 
-import de.flammenfuchs.javalib.reflect.sample.test1.Test1A;
-import de.flammenfuchs.javalib.reflect.sample.test2.Test2A;
+import de.flammenfuchs.javalib.reflect.sample.Test2A;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ReflectTest {
-
-    @Test
-    public void testClassScannerWithClass() {
-        ClassScanner classScanner = new ClassScanner(Test1A.class);
-        assertEquals(2, classScanner.scan().size());
-    }
-
-    @Test
-    public void testClassScannerWithObject() {
-        ClassScanner classScanner = new ClassScanner(new Test1A());
-        assertEquals(2, classScanner.scan().size());
-    }
-
-    @Test
-    public void testClassScannerWithString() {
-        ClassScanner classScanner = new ClassScanner("de.flammenfuchs.javalib.reflect.sample.test1");
-        assertEquals(2, classScanner.scan().size());
-    }
 
     @Test
     public void testClassScannerRecursivelyWithClass() {
@@ -40,28 +21,28 @@ public class ReflectTest {
 
     @Test
     public void testClassScannerRecursivelyWithString() {
-        ClassScanner classScanner = new ClassScanner("de.flammenfuchs.javalib.reflect.sample.test2");
+        ClassScanner classScanner = new ClassScanner("de.flammenfuchs.javalib.reflect.sample");
         assertEquals(3, classScanner.scan().size());
     }
 
     @Test
     public void testClassScannerWithIgnoredPackageWithClass() {
         ClassScanner classScanner = new ClassScanner(Test2A.class);
-        classScanner.addIgnoredPackages("de.flammenfuchs.javalib.reflect.sample.test2.example");
+        classScanner.addIgnoredPackages("de.flammenfuchs.javalib.reflect.sample.example");
         assertEquals(2, classScanner.scan().size());
     }
 
     @Test
     public void testClassScannerWithIgnoredPackageWithObject() {
         ClassScanner classScanner = new ClassScanner(new Test2A());
-        classScanner.addIgnoredPackages("de.flammenfuchs.javalib.reflect.sample.test2.example");
+        classScanner.addIgnoredPackages("de.flammenfuchs.javalib.reflect.sample.example");
         assertEquals(2, classScanner.scan().size());
     }
 
     @Test
     public void testClassScannerWithIgnoredPackageWithString() {
-        ClassScanner classScanner = new ClassScanner("de.flammenfuchs.javalib.reflect.sample.test2");
-        classScanner.addIgnoredPackages("de.flammenfuchs.javalib.reflect.sample.test2.example");
+        ClassScanner classScanner = new ClassScanner("de.flammenfuchs.javalib.reflect.sample");
+        classScanner.addIgnoredPackages("de.flammenfuchs.javalib.reflect.sample.example");
         assertEquals(2, classScanner.scan().size());
     }
 
@@ -81,7 +62,7 @@ public class ReflectTest {
 
     @Test
     public void testClassScannerWithDisabledRecursiveSearchWithString() {
-        ClassScanner classScanner = new ClassScanner("de.flammenfuchs.javalib.reflect.sample.test2");
+        ClassScanner classScanner = new ClassScanner("de.flammenfuchs.javalib.reflect.sample");
         classScanner.disableRecursiveSearch();
         assertEquals(2, classScanner.scan().size());
     }

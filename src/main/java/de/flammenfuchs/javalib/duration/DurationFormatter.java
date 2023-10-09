@@ -6,36 +6,69 @@ import java.util.concurrent.TimeUnit;
 
 public class DurationFormatter {
 
-    public static String format(long millis) {
-        long remaining = millis;
-        StringJoiner format = new StringJoiner(" ");
-        long days = TimeUnit.MILLISECONDS.toDays(remaining);
-        if (days > 0) {
-            format.add(days + "d");
-            remaining -= days * 24 * 60 * 60 * 1000;
+    public static String format(Duration duration, TimeUnit lowestUnit, String delimiter, boolean trim) {
+        StringJoiner stringJoiner = new StringJoiner(delimiter);
+
+        long days = duration.toDaysPart();
+        if (!trim || days != 0L) {
+            stringJoiner.add(days + "d");
         }
-        long hours = TimeUnit.MILLISECONDS.toHours(remaining);
-        if ((days > 0 || hours > 0) && remaining > 0) {
-            format.add(hours + "h");
-            remaining -= hours * 60 * 60 * 1000;
+        if (lowestUnit != TimeUnit.DAYS) {
+            long hours = duration.toHoursPart();
+            if (!trim || hours != 0L) {
+                stringJoiner.add(hours + "h");
+            }
+            if (lowestUnit != TimeUnit.HOURS) {
+                long minutes = duration.toMinutesPart();
+                if (!trim || minutes != 0L) {
+                    stringJoiner.add(minutes + "min");
+                }
+                if (lowestUnit != TimeUnit.MINUTES) {
+                    long seconds = duration.toSecondsPart();
+                    if (!trim || seconds != 0L) {
+                        stringJoiner.add(seconds + "sec");
+                    }
+                    if (lowestUnit != TimeUnit.SECONDS) {
+                        long millis = duration.toMillisPart();
+                        if (!trim || millis != 0L) {
+                            stringJoiner.add(millis + "ms");
+                        }
+                    }
+                }
+            }
         }
-        long minutes = TimeUnit.MILLISECONDS.toMinutes(remaining);
-        if ((days > 0 || hours > 0 || minutes > 0) && remaining > 0) {
-            format.add(minutes + "min");
-            remaining -= minutes * 60 * 1000;
-        }
-        long seconds = TimeUnit.MILLISECONDS.toSeconds(remaining);
-        if ((days > 0 || hours > 0 || minutes > 0 || seconds > 0) && remaining > 0) {
-            format.add(seconds + "sec");
-            remaining -= seconds * 1000;
-        }
-        if (remaining > 0) {
-            format.add(remaining + "ms");
-        }
-        return format.toString();
+        return stringJoiner.toString();
     }
 
     public static String format(Duration duration) {
-        return format(duration.toMillis());
+        return format(duration, TimeUnit.MILLISECONDS, " ", false);
+    }
+
+    public static String format(long millis) {
+        return format(Duration.ofMillis(millis), TimeUnit.MILLISECONDS, " ", false);
+    }
+
+    public static String format(Duration duration, TimeUnit lowestUnit) {
+        return format(duration, lowestUnit, " ", false);
+    }
+
+    public static String format(Duration duration, String delimiter) {
+        return format(duration, TimeUnit.MILLISECONDS, delimiter, false);
+    }
+
+    public static String format(Duration duration, boolean trim) {
+        return format(duration, TimeUnit.MILLISECONDS, " ", trim);
+    }
+
+    public static String format(Duration duration, TimeUnit lowestUnit, String delimiter) {
+        return format(duration, lowestUnit, delimiter, false);
+    }
+
+    public static String format(Duration duration, TimeUnit lowestUnit, boolean trim) {
+        return format(duration, lowestUnit, " ", trim);
+    }
+
+    public static String format(Duration duration, String delimiter, boolean trim) {
+        return format(duration, TimeUnit.MILLISECONDS, delimiter, trim);
     }
 }
