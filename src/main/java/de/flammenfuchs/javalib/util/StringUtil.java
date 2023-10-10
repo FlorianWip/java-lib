@@ -31,4 +31,14 @@ public class StringUtil {
     public static String stringArrayToString(String delimiter, String... elements) {
         return stringArrayToString(delimiter, null, null, elements);
     }
+
+    /**
+     * Check if a string only contains the letters from A to Z and a to z and numbers from 0 to 9
+     *
+     * @param var1 the checked {@link String}
+     * @return true if it is alphanumerical
+     */
+    public static boolean isAlphaNumerical(String var1) {
+        return var1.matches("[A-Za-z0-9]+");
+    }
 }
