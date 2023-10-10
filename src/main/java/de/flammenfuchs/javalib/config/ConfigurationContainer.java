@@ -10,6 +10,11 @@ import java.io.FileWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * Configuration Object which contains all necessary objects belonging to this config
+ *
+ * @param <T> type of the contained config
+ */
 public class ConfigurationContainer<T> {
 
     private final String directoryName;
@@ -23,6 +28,14 @@ public class ConfigurationContainer<T> {
     @Getter
     private T t;
 
+    /**
+     * Initialize a {@link ConfigurationContainer} and load its belonging file
+     *
+     * @param directoryName path to directory where the config is located
+     * @param fileName name of the config file
+     * @param gson instance of {@link Gson} to instantiate the config object
+     * @param configClass class of the config
+     */
     public ConfigurationContainer(String directoryName, String fileName, Gson gson, Class<T> configClass) {
         this.directoryName = directoryName;
         this.fileName = fileName;
@@ -33,6 +46,9 @@ public class ConfigurationContainer<T> {
         loadFile();
     }
 
+    /**
+     * Load the config file or load defaults if file is not existing
+     */
     @SneakyThrows
     private void loadFile() {
         if (!this.file.exists()) {
@@ -42,6 +58,9 @@ public class ConfigurationContainer<T> {
         }
     }
 
+    /**
+     * Load the config default values and save them into the file
+     */
     @SneakyThrows
     public void loadDefault() {
         try {
@@ -52,6 +71,9 @@ public class ConfigurationContainer<T> {
         save();
     }
 
+    /**
+     * Save current config object to file
+     */
     @SneakyThrows
     public void save() {
         Writer writer = new FileWriter(file, StandardCharsets.UTF_8);

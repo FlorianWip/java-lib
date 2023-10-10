@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * This class allows you to scan through packages
+ */
 public class ClassScanner {
 
     private final String packageName;
@@ -23,23 +26,49 @@ public class ClassScanner {
     @Getter
     private List<String> ignoredPackages = new ArrayList<>();
 
+    /**
+     * Create a ClassScanner
+     *
+     * @param mainClass the package name
+     */
     public ClassScanner(String mainClass) {
         this.packageName = mainClass;
     }
 
+    /**
+     * Create a ClassScanner
+     *
+     * @param mainClass an object in the searching package
+     */
     public ClassScanner(Object mainClass) {
         this.packageName = mainClass.getClass().getPackage().getName();
     }
 
+    /**
+     * Create a ClassScanner
+     *
+     * @param mainClass a class in the searching package
+     */
     public ClassScanner(Class<?> mainClass) {
         this.packageName = mainClass.getPackage().getName();
     }
 
+    /**
+     * Starts the scan in the top level package
+     *
+     * @return the found classes
+     */
     @SneakyThrows
     public List<Class<?>> scan() {
         return lookup(packageName);
     }
 
+    /**
+     * Scan a package
+     *
+     * @param lookupName the package to scan
+     * @return fount classes
+     */
     private List<Class<?>> lookup(String lookupName) {
         InputStream stream = ClassLoader.getSystemClassLoader()
                 .getResourceAsStream(lookupName.replaceAll("[.]", "/"));
@@ -70,6 +99,13 @@ public class ClassScanner {
         return classes;
     }
 
+    /**
+     * Load a class from the classloader
+     *
+     * @param className simple or complete name of the class
+     * @param packageName its package
+     * @return the {@link Class}
+     */
     private Class<?> getClass(String className, String packageName) {
         try {
             return Class.forName(packageName + "."
@@ -79,14 +115,27 @@ public class ClassScanner {
         }
     }
 
+    /**
+     * Add packages to ignore in the scan
+     *
+     * @param packages packages to ignore
+     */
     public void addIgnoredPackages(String... packages) {
         this.ignoredPackages.addAll(List.of(packages));
     }
 
+    /**
+     * Add packages to ignore in the scan
+     *
+     * @param packages packages to ignore
+     */
     public void addIgnoredPackages(Collection<String> packages) {
         this.ignoredPackages.addAll(packages);
     }
 
+    /**
+     * Disable the recursive search in the package
+     */
     public void disableRecursiveSearch() {
         recursiveSearch = false;
     }

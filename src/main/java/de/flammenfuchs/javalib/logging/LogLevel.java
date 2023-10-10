@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 
+/**
+ * The level of logging for the {@link Logger}
+ */
 @RequiredArgsConstructor
 @Getter
 @Accessors(fluent = true)

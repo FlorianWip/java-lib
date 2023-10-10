@@ -5,6 +5,13 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+/**
+ * An implementation for {@link Triple} with modifiable objects (not final)
+ *
+ * @param <A> Type of first object
+ * @param <B> Type of second object
+ * @param <C> Type of third object
+ */
 @Getter
 @Setter
 @AllArgsConstructor

@@ -4,6 +4,13 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 
+/**
+ * An implementation for {@link Triple} with unmodifiable objects (final)
+ *
+ * @param <A> Type of first object
+ * @param <B> Type of second object
+ * @param <C> Type of third object
+ */
 @RequiredArgsConstructor
 @Getter
 @Accessors(fluent = true)

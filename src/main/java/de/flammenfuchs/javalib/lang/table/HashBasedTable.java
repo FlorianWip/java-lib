@@ -5,6 +5,13 @@ import de.flammenfuchs.javalib.lang.tuple.Tuple;
 
 import java.util.*;
 
+/**
+ * An implementation of a {@link Table} based on a {@link HashMap}
+ *
+ * @param <T> the type of the first key
+ * @param <U> the type of the second key
+ * @param <V> the type of the stored value
+ */
 public class HashBasedTable<T, U, V> implements Table<T, U, V> {
 
     private final Map<T, Map<U, V>> data = new HashMap<>();
