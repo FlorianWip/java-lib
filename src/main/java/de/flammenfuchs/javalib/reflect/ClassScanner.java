@@ -1,5 +1,6 @@
 package de.flammenfuchs.javalib.reflect;
 
+import de.flammenfuchs.javalib.lang.list.NotNullArrayList;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -74,7 +75,7 @@ public class ClassScanner {
                 .getResourceAsStream(lookupName.replaceAll("[.]", "/"));
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
 
-        List<Class<?>> classes = new ArrayList<>();
+        List<Class<?>> classes = new NotNullArrayList<>();
 
         for (String line : reader.lines().toList()) {
             if (!line.contains(".") && recursiveSearch) {
@@ -94,7 +95,7 @@ public class ClassScanner {
             if (ignore) {
                 continue;
             }
-            classes.add(getClass(line, packageName));
+            classes.add(getClass(line, lookupName));
         }
         return classes;
     }
