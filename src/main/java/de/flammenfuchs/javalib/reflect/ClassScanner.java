@@ -70,7 +70,7 @@ public class ClassScanner {
      * @return fount classes
      */
     private List<Class<?>> lookup(String lookupName) {
-        InputStream stream = ClassLoader.getSystemClassLoader()
+        InputStream stream = classLoader
                 .getResourceAsStream(lookupName.replaceAll("[.]", "/"));
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
 
