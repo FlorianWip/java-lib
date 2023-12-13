@@ -12,6 +12,7 @@ It will be expanded in the future. I have to move old code into this library and
     - [Gradle](#gradle)
 - [Migration](#migration)
     - [from v1.x.x to v2](#from-v1xx-to-v2)
+    - [from v2.1.0 to v2.2.0](#from-v210-to-v220)
 
 ## Includes
 
@@ -44,7 +45,7 @@ This library needs gson `v2.10.1`.
 <dependency>
     <groupId>de.flammenfuchs</groupId>
     <artifactId>java-lib</artifactId>
-    <version>2.1.0</version>
+    <version>2.2.0</version>
 </dependency>
 ````
 ### Gradle
@@ -54,7 +55,7 @@ maven {
 }
 ```
 ```
-implementation("de.flammenfuchs:java-lib:2.1.0")
+implementation("de.flammenfuchs:java-lib:2.2.0")
 ```
 
 ## Migration
@@ -74,3 +75,7 @@ before. It returns now
 List<Class<?>>
 ``
 .This is only a slight change. It should not affect your code normally
+### from v2.1.0 to v2.2.0
+**ClassScanner**<br>
+ClassScanner now supports multiple implementations and is moved into a separate package.<br>
+The public methods are not heavily affected. 

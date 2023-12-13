@@ -1,8 +1,6 @@
-package de.flammenfuchs.javalib.reflect;
+package de.flammenfuchs.javalib.reflect.scanner;
 
 import de.flammenfuchs.javalib.lang.list.NotNullArrayList;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.SneakyThrows;
 
 import java.io.BufferedReader;
@@ -10,74 +8,60 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
-/**
- * This class allows you to scan through packages
- */
-public class ClassScanner {
+public class DefaultClassScanner implements ClassScanner {
 
     private final String packageName;
+    private final ClassLoader classLoader;
 
     private boolean recursiveSearch = true;
-
-    @Setter
-    private ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-
-    @Getter
     private List<String> ignoredPackages = new ArrayList<>();
 
-    /**
-     * Create a ClassScanner
-     *
-     * @param mainClass the package name
-     */
-    public ClassScanner(String mainClass) {
-        this.packageName = mainClass;
+    public DefaultClassScanner(String packageName, ClassLoader classLoader) {
+        this.packageName = packageName;
+        this.classLoader = classLoader;
     }
 
-    /**
-     * Create a ClassScanner
-     *
-     * @param mainClass an object in the searching package
-     */
-    public ClassScanner(Object mainClass) {
-        this.packageName = mainClass.getClass().getPackage().getName();
+    public DefaultClassScanner(Class<?> mainClass, ClassLoader classLoader) {
+        this(mainClass.getPackageName(), classLoader);
     }
 
-    /**
-     * Create a ClassScanner
-     *
-     * @param mainClass a class in the searching package
-     */
-    public ClassScanner(Class<?> mainClass) {
-        this.packageName = mainClass.getPackage().getName();
+    public DefaultClassScanner(Object main, ClassLoader classLoader) {
+        this(main.getClass().getPackageName(), classLoader);
     }
 
-    /**
-     * Starts the scan in the top level package
-     *
-     * @return the found classes
-     */
+    public DefaultClassScanner(String packageName) {
+        this(packageName, ClassLoader.getSystemClassLoader());
+    }
+
+    public DefaultClassScanner(Class<?> mainClass) {
+        this(mainClass.getPackageName(), ClassLoader.getSystemClassLoader());
+    }
+
+    public DefaultClassScanner(Object main) {
+        this(main.getClass().getPackageName(), ClassLoader.getSystemClassLoader());
+    }
+
+    @Override
+    public ClassLoader getScanningClassLoader() {
+        return classLoader;
+    }
+
     @SneakyThrows
     public List<Class<?>> scan() {
         return lookup(packageName);
     }
 
-    /**
-     * Scan a package
-     *
-     * @param lookupName the package to scan
-     * @return fount classes
-     */
     private List<Class<?>> lookup(String lookupName) {
-        InputStream stream = classLoader
+        InputStream stream = getClass().getClassLoader()
                 .getResourceAsStream(lookupName.replaceAll("[.]", "/"));
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
 
         List<Class<?>> classes = new NotNullArrayList<>();
-
-        for (String line : reader.lines().toList()) {
+        List<String> lines = reader.lines().toList();
+        for (String line : lines) {
             if (!line.contains(".") && recursiveSearch) {
                 classes.addAll(lookup(lookupName + "." + line));
                 continue;
@@ -100,45 +84,27 @@ public class ClassScanner {
         return classes;
     }
 
-    /**
-     * Load a class from the classloader
-     *
-     * @param className simple or complete name of the class
-     * @param packageName its package
-     * @return the {@link Class}
-     */
     private Class<?> getClass(String className, String packageName) {
         try {
-            return Class.forName(packageName + "."
+            return classLoader.loadClass(packageName + "."
                     + className.substring(0, className.lastIndexOf('.')));
         } catch (ClassNotFoundException e) {
             return null;
         }
     }
 
-    /**
-     * Add packages to ignore in the scan
-     *
-     * @param packages packages to ignore
-     */
+    @Override
     public void addIgnoredPackages(String... packages) {
-        this.ignoredPackages.addAll(List.of(packages));
+        Collections.addAll(this.ignoredPackages, packages);
     }
 
-    /**
-     * Add packages to ignore in the scan
-     *
-     * @param packages packages to ignore
-     */
+    @Override
     public void addIgnoredPackages(Collection<String> packages) {
         this.ignoredPackages.addAll(packages);
     }
 
-    /**
-     * Disable the recursive search in the package
-     */
+    @Override
     public void disableRecursiveSearch() {
         recursiveSearch = false;
     }
-
 }
