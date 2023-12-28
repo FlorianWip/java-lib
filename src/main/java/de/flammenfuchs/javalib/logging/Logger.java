@@ -2,6 +2,7 @@ package de.flammenfuchs.javalib.logging;
 
 import java.util.Date;
 import java.util.logging.ConsoleHandler;
+import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 import java.util.logging.SimpleFormatter;
 
@@ -68,6 +69,9 @@ public class Logger {
      */
     private void init(String formatString, boolean highlightNonInfo) {
         this.utilLogger.setUseParentHandlers(false);
+        for (Handler handler : this.utilLogger.getHandlers()) {
+            this.utilLogger.removeHandler(handler);
+        }
         ConsoleHandler consoleHandler = new ConsoleHandler();
         consoleHandler.setFormatter(new SimpleFormatter() {
             @Override
