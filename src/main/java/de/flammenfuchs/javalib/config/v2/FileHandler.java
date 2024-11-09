@@ -1,7 +1,5 @@
 package de.flammenfuchs.javalib.config.v2;
 
-import com.google.gson.Gson;
-
 import java.nio.file.Path;
 
 public interface FileHandler {
