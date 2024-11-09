@@ -23,7 +23,7 @@ It will be expanded in the future. I have to move old code into this library and
 - ReflectionUtil
 
 ### Features
-- JSON-Config-System
+- Config-System with JSON implementation
 - ClassScanner
 
 ### Language
@@ -45,7 +45,7 @@ This library needs gson `v2.10.1`.
 <dependency>
     <groupId>de.flammenfuchs</groupId>
     <artifactId>java-lib</artifactId>
-    <version>2.2.0</version>
+    <version>2.3.0</version>
 </dependency>
 ````
 ### Gradle
@@ -55,10 +55,11 @@ maven {
 }
 ```
 ```
-implementation("de.flammenfuchs:java-lib:2.2.0")
+implementation("de.flammenfuchs:java-lib:2.3.0")
 ```
 
 ## Migration
+> Unspecified versions are not affecting your code and don't need migration
 ### from v1.x.x to v2
 **Guava**<br>
 In v1 the library used guava `v32.1.1-jre`.<br>
