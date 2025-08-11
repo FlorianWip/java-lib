@@ -45,7 +45,7 @@ This library needs gson `v2.10.1`.
 <dependency>
     <groupId>de.flammenfuchs</groupId>
     <artifactId>java-lib</artifactId>
-    <version>2.3.0</version>
+    <version>2.3.1</version>
 </dependency>
 ````
 ### Gradle
@@ -55,7 +55,7 @@ maven {
 }
 ```
 ```
-implementation("de.flammenfuchs:java-lib:2.3.0")
+implementation("de.flammenfuchs:java-lib:2.3.1")
 ```
 
 ## Migration

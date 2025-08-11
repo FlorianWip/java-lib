@@ -4,6 +4,7 @@ import de.flammenfuchs.javalib.lang.triple.Triple;
 import de.flammenfuchs.javalib.lang.tuple.Tuple;
 
 import java.util.*;
+import java.util.function.Supplier;
 
 /**
  * An implementation of a {@link Table} based on a {@link HashMap}
@@ -125,5 +126,15 @@ public class HashBasedTable<T, U, V> implements Table<T, U, V> {
             return put(t, u, value);
         }
         return mapValue;
+    }
+
+    @Override
+    public V getOrSupply(T t, U u, Supplier<V> supplier) {
+        V value = get(t, u);
+        if (value == null) {
+            value = supplier.get();
+            put(t, u, value);
+        }
+        return value;
     }
 }

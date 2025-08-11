@@ -5,6 +5,7 @@ import de.flammenfuchs.javalib.lang.tuple.Tuple;
 
 import java.util.Collection;
 import java.util.Set;
+import java.util.function.Supplier;
 
 /**
  * A table allows you to link a value to two different keys
@@ -129,4 +130,14 @@ public interface Table <T, U, V> {
      * @return the already existing value in the table or the given value if inserted
      */
     V putIfAbsent(T t, U u, V value);
+
+    /**
+     * Get a value from the table or supply a new value if not exist
+     *
+     * @param t key 1
+     * @param u key 2
+     * @param supplier the supplier to create a new value if not exist
+     * @return the supplied or existing value
+     */
+    V getOrSupply(T t, U u, Supplier<V> supplier);
 }
